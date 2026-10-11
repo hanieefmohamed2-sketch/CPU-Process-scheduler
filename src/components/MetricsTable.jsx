@@ -20,7 +20,10 @@ export function MetricsTable({ processStats, metrics, processes, algorithmName }
           <Calculator className="icon text-primary" size={18} />
           {algorithmName ? `${algorithmName} Performance Metrics` : 'Performance Metrics'}
         </h3>
-        <span className="badge badge-success">Output Stats</span>
+        <div className="header-badges">
+          <span className="badge badge-success">Output Stats</span>
+          <span className="scroll-indicator-badge">↔ Swipe Table</span>
+        </div>
       </div>
 
       {/* KPI Cards Summary Banner */}

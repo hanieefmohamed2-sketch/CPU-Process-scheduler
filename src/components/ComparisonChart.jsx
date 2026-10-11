@@ -80,7 +80,10 @@ export function ComparisonChart({
           <Trophy className="icon text-warning" size={18} />
           Algorithm Performance Comparison & Optimization
         </h3>
-        <span className="badge badge-warning">Comparative Analysis</span>
+        <div className="header-badges">
+          <span className="badge badge-warning">Comparative Analysis</span>
+          <span className="scroll-indicator-badge">↔ Swipe Table</span>
+        </div>
       </div>
 
       {/* Best Algorithm Winner Banner */}

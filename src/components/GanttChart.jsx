@@ -44,6 +44,7 @@ export function GanttChart({ timeline, processes }) {
           <span className="badge badge-accent">
             Total Duration: {totalSpan} units ({startOffset} → {maxTime})
           </span>
+          <span className="scroll-indicator-badge">↔ Swipe Timeline</span>
         </div>
       </div>
 

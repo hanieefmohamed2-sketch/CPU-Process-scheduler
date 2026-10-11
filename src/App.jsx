@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Cpu, Sparkles, CheckCircle2, ShieldAlert, BarChart3, FastForward, Layers, Repeat, ArrowRight } from 'lucide-react';
+import { Cpu, Sparkles, CheckCircle2, ShieldAlert, BarChart3, FastForward, Layers, Repeat, ArrowRight, Plus } from 'lucide-react';
 import { ProcessForm } from './components/ProcessForm.jsx';
 import { ProcessTable } from './components/ProcessTable.jsx';
 import { QuantumControls } from './components/QuantumControls.jsx';
@@ -57,6 +57,7 @@ export default function App() {
   const [processes, setProcesses] = useState(SAMPLE_DATASET);
   const [activeTab, setActiveTab] = useState('intro'); // 'intro' | 'fcfs' | 'sjn' | 'rr' | 'comparison'
   const [timeQuantum, setTimeQuantum] = useState(2);
+  const [mobileWorkspaceView, setMobileWorkspaceView] = useState('all'); // 'all' | 'input' | 'results'
   const [notification, setNotification] = useState(null);
 
   const showToast = (message, type = 'success') => {
@@ -226,9 +227,43 @@ export default function App() {
               </div>
             </div>
 
+            {/* Mobile Workspace View Selector (Visible on mobile / small screens) */}
+            <div className="mobile-workspace-nav" role="tablist" aria-label="Mobile workspace view switch">
+              <button
+                type="button"
+                role="tab"
+                aria-selected={mobileWorkspaceView === 'all'}
+                className={`mobile-view-pill ${mobileWorkspaceView === 'all' ? 'active' : ''}`}
+                onClick={() => setMobileWorkspaceView('all')}
+              >
+                <Layers size={13} />
+                <span>All Sections</span>
+              </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={mobileWorkspaceView === 'input'}
+                className={`mobile-view-pill ${mobileWorkspaceView === 'input' ? 'active' : ''}`}
+                onClick={() => setMobileWorkspaceView('input')}
+              >
+                <Plus size={13} />
+                <span>Input & Queue ({processes.length})</span>
+              </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={mobileWorkspaceView === 'results'}
+                className={`mobile-view-pill ${mobileWorkspaceView === 'results' ? 'active' : ''}`}
+                onClick={() => setMobileWorkspaceView('results')}
+              >
+                <BarChart3 size={13} />
+                <span>Gantt & Metrics</span>
+              </button>
+            </div>
+
             <div className="grid-two-columns">
               {/* Left Column: Process Input & Queue */}
-              <div className="column-section">
+              <div className={`column-section ${mobileWorkspaceView === 'results' ? 'mobile-hidden' : ''}`}>
                 <ProcessForm
                   onAddProcess={handleAddProcess}
                   onLoadSampleData={handleLoadSampleData}
@@ -250,7 +285,7 @@ export default function App() {
               </div>
 
               {/* Right Column: Timeline & Metrics */}
-              <div className="column-section">
+              <div className={`column-section ${mobileWorkspaceView === 'input' ? 'mobile-hidden' : ''}`}>
                 <GanttChart
                   timeline={currentResult.timeline}
                   processes={processes}
